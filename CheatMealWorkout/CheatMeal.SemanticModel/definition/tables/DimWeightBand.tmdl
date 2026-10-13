@@ -1,0 +1,29 @@
+table DimWeightBand
+	lineageTag: 7b3d36ac-b9d6-4bd3-906b-94f814bba9ae
+
+	column 'Weight Band'
+		dataType: string
+		lineageTag: 82c1ef79-96f2-4a33-8afa-821bb1969563
+		summarizeBy: none
+		sourceColumn: Weight Band
+		sortByColumn: 'Weight Sort'
+
+	column 'Weight Sort'
+		dataType: int64
+		isHidden
+		lineageTag: 4a9a6225-7755-48d9-8e46-1324661fd22a
+		summarizeBy: none
+		sourceColumn: Weight Sort
+
+	partition DimWeightBand = m
+		mode: import
+		source =
+				let
+				    Source = Raw,
+				    Pick = Table.SelectColumns(Source, {"Weight Band"}),
+				    Unique = Table.Distinct(Pick),
+				    Renamed = Unique,
+				    Final = Table.AddColumn(Renamed, "Weight Sort", each if [Weight Band] = "Under 60 kg" then 1 else if [Weight Band] = "60-69 kg" then 2 else if [Weight Band] = "70-79 kg" then 3 else if [Weight Band] = "80-89 kg" then 4 else if [Weight Band] = "90+ kg" then 5 else 99, Int64.Type)
+				in
+				    Final
+

@@ -1,0 +1,244 @@
+table FactOrders
+	lineageTag: 450f61aa-10a9-4bc8-9ba1-bbd904aeb448
+
+	measure 'Total Orders' = COUNTROWS ( FactOrders )
+		formatString: #,0
+		displayFolder: Basics
+		lineageTag: 22036d83-a1fd-44f0-b93b-f14a98811218
+
+	measure 'Avg Calories' = AVERAGE ( FactOrders[Calories] )
+		formatString: #,0
+		displayFolder: Basics
+		lineageTag: 123abe12-62af-4671-b559-9ad0315786e4
+
+	measure 'Avg Sodium (mg)' = AVERAGE ( FactOrders[Sodium (mg)] )
+		formatString: #,0
+		displayFolder: Basics
+		lineageTag: 4e99ffac-f2ef-46cd-9cf3-b477ed9c87b3
+
+	measure 'Avg Sugar (g)' = AVERAGE ( FactOrders[Sugar (g)] )
+		formatString: #,0
+		displayFolder: Basics
+		lineageTag: eb6c9cb2-e3f6-49c2-a87f-a96b1ab332ce
+
+	measure 'Avg Walking Min' = AVERAGE ( FactOrders[Walking (min)] )
+		formatString: #,0
+		displayFolder: Workout cost
+		lineageTag: 55213ca3-1e8a-44e5-a9e6-dcfbfe940b2d
+
+	measure 'Avg Cycling Min' = AVERAGE ( FactOrders[Cycling (min)] )
+		formatString: #,0
+		displayFolder: Workout cost
+		lineageTag: a8c4e3dc-8204-44ec-8110-0f2bc9667559
+
+	measure 'Avg Running Min' = AVERAGE ( FactOrders[Running (min)] )
+		formatString: #,0
+		displayFolder: Workout cost
+		lineageTag: fd66081d-5bca-428f-b042-fe17e7cbb67e
+
+	measure 'Avg HIIT Min' = AVERAGE ( FactOrders[HIIT (min)] )
+		formatString: #,0
+		displayFolder: Workout cost
+		lineageTag: ef870b8e-1165-4098-9c94-e75f082e7f78
+
+	measure 'Avg Running Hours' = DIVIDE ( [Avg Running Min], 60 )
+		formatString: 0.0
+		displayFolder: Workout cost
+		lineageTag: 39bd45be-cf70-43e6-ab97-1b1f1126e517
+
+	measure '% Meals Over Daily Limit' =
+			DIVIDE (
+			    CALCULATE ( [Total Orders], FactOrders[% of Daily Calories] >= 100 ),
+			    [Total Orders]
+			)
+		formatString: 0.0%
+		displayFolder: Shares
+		lineageTag: ffdd57c7-6cbf-4927-b842-35d9de1c28ea
+
+	measure '% Meals Over Sodium Limit' =
+			DIVIDE (
+			    CALCULATE ( [Total Orders], FactOrders[Sodium (mg)] > 2300 ),
+			    [Total Orders]
+			)
+		formatString: 0.0%
+		displayFolder: Shares
+		lineageTag: 080cf442-d0d1-4849-a321-4380a8733b79
+
+	measure '% of All Orders' = DIVIDE ( [Total Orders], CALCULATE ( [Total Orders], ALL ( FactOrders ) ) )
+		formatString: 0.0%
+		displayFolder: Shares
+		lineageTag: b9518690-81a6-4595-b54e-6a95717924c4
+
+	measure 'Running Min vs Average' =
+			VAR AllAvg = CALCULATE ( [Avg Running Min], ALL ( FactOrders ) )
+			RETURN DIVIDE ( [Avg Running Min] - AllAvg, AllAvg )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Comparison
+		lineageTag: d31685bc-9fb1-4878-b520-ee3e8dfdbb8e
+
+	column 'Order ID'
+		dataType: string
+		lineageTag: cbe6bed1-75bd-4efc-a921-5429ec328194
+		summarizeBy: none
+		sourceColumn: Order ID
+
+	column Chain
+		dataType: string
+		isHidden
+		lineageTag: c6606e2e-929c-48cb-923c-2256c65f03df
+		summarizeBy: none
+		sourceColumn: Chain
+
+	column 'Meal Type'
+		dataType: string
+		isHidden
+		lineageTag: a9bdc101-4017-495f-8459-8e0324962273
+		summarizeBy: none
+		sourceColumn: Meal Type
+
+	column Items
+		dataType: int64
+		lineageTag: d5dfaf20-a6b9-4d53-9a17-c2f61c459524
+		summarizeBy: sum
+		sourceColumn: Items
+
+	column Calories
+		dataType: int64
+		lineageTag: d63bbb6c-8b7f-4024-b67a-54ae258e2a59
+		summarizeBy: sum
+		sourceColumn: Calories
+
+	column 'Fat (g)'
+		dataType: int64
+		lineageTag: 648a317d-ce95-429d-822a-abb7308e3542
+		summarizeBy: sum
+		sourceColumn: Fat (g)
+
+	column 'Saturated Fat (g)'
+		dataType: int64
+		lineageTag: 260cdefc-512d-45a0-9986-e4712f49c815
+		summarizeBy: sum
+		sourceColumn: Saturated Fat (g)
+
+	column 'Carbs (g)'
+		dataType: int64
+		lineageTag: 670e2e16-c69c-4f9c-8d8c-8be7be63232e
+		summarizeBy: sum
+		sourceColumn: Carbs (g)
+
+	column 'Sugar (g)'
+		dataType: int64
+		lineageTag: 0bb4c0e5-7138-4a21-8c89-e51f3350a4fc
+		summarizeBy: sum
+		sourceColumn: Sugar (g)
+
+	column 'Protein (g)'
+		dataType: int64
+		lineageTag: f8dc6731-be71-42a6-a102-e8275a4c0045
+		summarizeBy: sum
+		sourceColumn: Protein (g)
+
+	column 'Sodium (mg)'
+		dataType: int64
+		lineageTag: e9aa7028-1662-4ed5-b6a9-5d8e82629c12
+		summarizeBy: sum
+		sourceColumn: Sodium (mg)
+
+	column Gender
+		dataType: string
+		isHidden
+		lineageTag: a52c79ab-4907-49b4-a442-a2a6cd87afbb
+		summarizeBy: none
+		sourceColumn: Gender
+
+	column Age
+		dataType: int64
+		lineageTag: 754cd19a-1675-44fd-9787-b6129f3b1fca
+		summarizeBy: none
+		sourceColumn: Age
+
+	column 'Weight (kg)'
+		dataType: double
+		lineageTag: fe323515-7287-4f94-8077-b53b48c14168
+		summarizeBy: none
+		sourceColumn: Weight (kg)
+
+	column 'Fitness Level'
+		dataType: string
+		isHidden
+		lineageTag: 691f2ad4-2022-4bf4-a0de-9e28d39986ef
+		summarizeBy: none
+		sourceColumn: Fitness Level
+
+	column 'Digestion Burn (kcal)'
+		dataType: double
+		lineageTag: 0ff58d52-cc09-4398-922c-af1452d8d4e1
+		summarizeBy: sum
+		sourceColumn: Digestion Burn (kcal)
+
+	column 'Net Surplus (kcal)'
+		dataType: double
+		lineageTag: 52629797-de48-487c-8051-0ed85df91d97
+		summarizeBy: sum
+		sourceColumn: Net Surplus (kcal)
+
+	column 'Walking (min)'
+		dataType: double
+		lineageTag: d15b6335-4f49-4714-8ca7-42492c225fd5
+		summarizeBy: sum
+		sourceColumn: Walking (min)
+
+	column 'Cycling (min)'
+		dataType: double
+		lineageTag: f9a79b02-a2b1-4b13-9e9b-c9586227823a
+		summarizeBy: sum
+		sourceColumn: Cycling (min)
+
+	column 'Running (min)'
+		dataType: double
+		lineageTag: e5c1d370-a209-458f-aeb1-a20c49751699
+		summarizeBy: sum
+		sourceColumn: Running (min)
+
+	column 'HIIT (min)'
+		dataType: double
+		lineageTag: 2c5c1087-17c7-440f-8256-57f3158d0bb1
+		summarizeBy: sum
+		sourceColumn: HIIT (min)
+
+	column '% of Daily Calories'
+		dataType: double
+		lineageTag: ed2e42a3-d006-43fc-b478-5a32c20d5d95
+		summarizeBy: sum
+		sourceColumn: % of Daily Calories
+
+	column 'Shock Tier'
+		dataType: string
+		isHidden
+		lineageTag: c67cb35a-e8d0-4c98-9fb7-240f507e0454
+		summarizeBy: none
+		sourceColumn: Shock Tier
+
+	column 'Age Band'
+		dataType: string
+		isHidden
+		lineageTag: c90b2b9c-74ef-42cb-85c0-8b0091553d4f
+		summarizeBy: none
+		sourceColumn: Age Band
+
+	column 'Weight Band'
+		dataType: string
+		isHidden
+		lineageTag: d36f328d-c08f-44b0-83e9-8ba56a4ea909
+		summarizeBy: none
+		sourceColumn: Weight Band
+
+	partition FactOrders = m
+		mode: import
+		source =
+				let
+				    Source = Raw,
+				    Renamed = Table.RenameColumns(Source, {{"order_id", "Order ID"}, {"fast_food_chain", "Chain"}, {"meal_category", "Meal Type"}, {"item_count", "Items"}, {"total_calories", "Calories"}, {"fat_grams", "Fat (g)"}, {"saturated_fat_grams", "Saturated Fat (g)"}, {"carb_grams", "Carbs (g)"}, {"sugar_grams", "Sugar (g)"}, {"protein_grams", "Protein (g)"}, {"sodium_mg", "Sodium (mg)"}, {"consumer_gender", "Gender"}, {"consumer_age", "Age"}, {"consumer_weight_kg", "Weight (kg)"}, {"fitness_level", "Fitness Level"}, {"thermic_effect_calories", "Digestion Burn (kcal)"}, {"net_caloric_surplus", "Net Surplus (kcal)"}, {"walking_burn_time_min", "Walking (min)"}, {"cycling_burn_time_min", "Cycling (min)"}, {"running_burn_time_min", "Running (min)"}, {"hiit_burn_time_min", "HIIT (min)"}, {"daily_calorie_allowance_pct", "% of Daily Calories"}, {"workout_shock_tier", "Shock Tier"}})
+				in
+				    Renamed
+

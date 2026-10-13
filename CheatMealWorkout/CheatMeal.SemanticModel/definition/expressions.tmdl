@@ -1,0 +1,28 @@
+expression Raw =
+		let
+		    Source = Csv.Document(File.Contents("C:\Users\mazan\Documents\CheatMealWorkout\fast_food_cheat_meal_workout_burn.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+		    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    Types = Table.TransformColumnTypes(Headers, {
+		        {"order_id", type text}, {"fast_food_chain", type text}, {"meal_category", type text},
+		        {"item_count", Int64.Type}, {"total_calories", Int64.Type}, {"fat_grams", Int64.Type},
+		        {"saturated_fat_grams", Int64.Type}, {"carb_grams", Int64.Type}, {"sugar_grams", Int64.Type},
+		        {"protein_grams", Int64.Type}, {"sodium_mg", Int64.Type}, {"consumer_gender", type text},
+		        {"consumer_age", Int64.Type}, {"consumer_weight_kg", type number}, {"fitness_level", type text},
+		        {"thermic_effect_calories", type number}, {"net_caloric_surplus", type number},
+		        {"walking_burn_time_min", type number}, {"cycling_burn_time_min", type number},
+		        {"running_burn_time_min", type number}, {"hiit_burn_time_min", type number},
+		        {"daily_calorie_allowance_pct", type number}, {"workout_shock_tier", type text}}, "en-US"),
+		    AgeBand = Table.AddColumn(Types, "Age Band", each
+		        if [consumer_age] < 30 then "18-29" else if [consumer_age] < 40 then "30-39"
+		        else if [consumer_age] < 50 then "40-49" else if [consumer_age] < 60 then "50-59" else "60-65", type text),
+		    WeightBand = Table.AddColumn(AgeBand, "Weight Band", each
+		        if [consumer_weight_kg] < 60 then "Under 60 kg" else if [consumer_weight_kg] < 70 then "60-69 kg"
+		        else if [consumer_weight_kg] < 80 then "70-79 kg" else if [consumer_weight_kg] < 90 then "80-89 kg" else "90+ kg", type text)
+		in
+		    WeightBand
+	lineageTag: 99122dad-369e-420b-96a3-46dacb662275
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

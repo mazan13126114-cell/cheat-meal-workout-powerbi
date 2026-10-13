@@ -1,0 +1,21 @@
+table DimAgeBand
+	lineageTag: 42810ce4-923b-4ffd-b69e-4c426ddb2d4c
+
+	column 'Age Band'
+		dataType: string
+		lineageTag: df079c95-731e-4d45-8fd8-154499df64d1
+		summarizeBy: none
+		sourceColumn: Age Band
+
+	partition DimAgeBand = m
+		mode: import
+		source =
+				let
+				    Source = Raw,
+				    Pick = Table.SelectColumns(Source, {"Age Band"}),
+				    Unique = Table.Distinct(Pick),
+				    Renamed = Unique,
+				    Final = Renamed
+				in
+				    Final
+

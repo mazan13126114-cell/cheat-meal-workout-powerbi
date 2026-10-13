@@ -1,0 +1,21 @@
+table DimChain
+	lineageTag: 443ec980-99fe-4cbb-bdee-c50969146b39
+
+	column Chain
+		dataType: string
+		lineageTag: d9cde455-f838-4d37-9771-7c6c8063980d
+		summarizeBy: none
+		sourceColumn: Chain
+
+	partition DimChain = m
+		mode: import
+		source =
+				let
+				    Source = Raw,
+				    Pick = Table.SelectColumns(Source, {"fast_food_chain"}),
+				    Unique = Table.Distinct(Pick),
+				    Renamed = Table.RenameColumns(Unique, {{"fast_food_chain", "Chain"}}),
+				    Final = Renamed
+				in
+				    Final
+

@@ -1,0 +1,21 @@
+table DimMealType
+	lineageTag: 0778138e-c428-4fad-86e3-276cdd24a748
+
+	column 'Meal Type'
+		dataType: string
+		lineageTag: cb3c089d-b959-4c45-9533-9b5978415b42
+		summarizeBy: none
+		sourceColumn: Meal Type
+
+	partition DimMealType = m
+		mode: import
+		source =
+				let
+				    Source = Raw,
+				    Pick = Table.SelectColumns(Source, {"meal_category"}),
+				    Unique = Table.Distinct(Pick),
+				    Renamed = Table.RenameColumns(Unique, {{"meal_category", "Meal Type"}}),
+				    Final = Renamed
+				in
+				    Final
+

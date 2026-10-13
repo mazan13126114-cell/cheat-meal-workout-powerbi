@@ -1,0 +1,29 @@
+table DimFitness
+	lineageTag: 88427897-2413-477d-84d5-7484720229ed
+
+	column 'Fitness Level'
+		dataType: string
+		lineageTag: ccb07802-0422-4d9c-b19e-4cb809b3a5db
+		summarizeBy: none
+		sourceColumn: Fitness Level
+		sortByColumn: 'Fitness Sort'
+
+	column 'Fitness Sort'
+		dataType: int64
+		isHidden
+		lineageTag: 15a9a288-6f28-4c50-9b36-ba8a337bbb4e
+		summarizeBy: none
+		sourceColumn: Fitness Sort
+
+	partition DimFitness = m
+		mode: import
+		source =
+				let
+				    Source = Raw,
+				    Pick = Table.SelectColumns(Source, {"fitness_level"}),
+				    Unique = Table.Distinct(Pick),
+				    Renamed = Table.RenameColumns(Unique, {{"fitness_level", "Fitness Level"}}),
+				    Final = Table.AddColumn(Renamed, "Fitness Sort", each if [Fitness Level] = "Sedentary" then 1 else if [Fitness Level] = "Moderately Active" then 2 else if [Fitness Level] = "Highly Trained" then 3 else 99, Int64.Type)
+				in
+				    Final
+

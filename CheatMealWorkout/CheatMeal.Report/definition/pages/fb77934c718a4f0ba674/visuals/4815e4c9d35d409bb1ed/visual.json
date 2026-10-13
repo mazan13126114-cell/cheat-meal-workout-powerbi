@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "name": "4815e4c9d35d409bb1ed",
+  "position": {
+    "x": 16,
+    "y": 8,
+    "z": 27000,
+    "height": 48,
+    "width": 1248,
+    "tabOrder": 27000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Light, sedentary people pay the biggest price",
+                    "textStyle": {
+                      "fontSize": "20pt",
+                      "color": "#1F2933",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

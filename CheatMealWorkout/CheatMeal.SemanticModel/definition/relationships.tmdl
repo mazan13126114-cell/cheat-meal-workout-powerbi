@@ -1,0 +1,28 @@
+relationship 2e6e71f8-d798-4a74-8c6d-49b0ffa656e9
+	fromColumn: FactOrders.Chain
+	toColumn: DimChain.Chain
+
+relationship 1a64a9ee-1228-414f-bd92-7d594709b9d3
+	fromColumn: FactOrders.'Meal Type'
+	toColumn: DimMealType.'Meal Type'
+
+relationship 85e635fd-b9e0-4744-9503-abb5509458f5
+	fromColumn: FactOrders.Gender
+	toColumn: DimGender.Gender
+
+relationship f13eb943-549b-4031-8f47-53b167282ab9
+	fromColumn: FactOrders.'Age Band'
+	toColumn: DimAgeBand.'Age Band'
+
+relationship a6f643ea-6c6b-4bf0-bbce-f04020d62510
+	fromColumn: FactOrders.'Fitness Level'
+	toColumn: DimFitness.'Fitness Level'
+
+relationship 255768c4-379a-4fbb-8efd-c1ecfd70a904
+	fromColumn: FactOrders.'Shock Tier'
+	toColumn: DimShockTier.'Shock Tier'
+
+relationship 231bc788-c02d-478c-8477-e69f33966176
+	fromColumn: FactOrders.'Weight Band'
+	toColumn: DimWeightBand.'Weight Band'
+

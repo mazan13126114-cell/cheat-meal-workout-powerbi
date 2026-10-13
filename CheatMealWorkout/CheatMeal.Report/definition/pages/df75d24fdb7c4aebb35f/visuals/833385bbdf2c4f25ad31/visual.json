@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "name": "833385bbdf2c4f25ad31",
+  "position": {
+    "x": 16,
+    "y": 8,
+    "z": 20000,
+    "height": 48,
+    "width": 1248,
+    "tabOrder": 20000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "HIIT takes under a third of the time walking does",
+                    "textStyle": {
+                      "fontSize": "20pt",
+                      "color": "#1F2933",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

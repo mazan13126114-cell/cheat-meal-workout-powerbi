@@ -1,0 +1,21 @@
+table DimGender
+	lineageTag: dd09c92c-3a75-490d-85de-b3c5d6a24cc1
+
+	column Gender
+		dataType: string
+		lineageTag: f0dfb316-0bac-4189-b81d-20b69ec1cc31
+		summarizeBy: none
+		sourceColumn: Gender
+
+	partition DimGender = m
+		mode: import
+		source =
+				let
+				    Source = Raw,
+				    Pick = Table.SelectColumns(Source, {"consumer_gender"}),
+				    Unique = Table.Distinct(Pick),
+				    Renamed = Table.RenameColumns(Unique, {{"consumer_gender", "Gender"}}),
+				    Final = Renamed
+				in
+				    Final
+

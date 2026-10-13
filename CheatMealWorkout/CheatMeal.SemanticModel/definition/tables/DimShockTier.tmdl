@@ -1,0 +1,36 @@
+table DimShockTier
+	lineageTag: 21b51752-e2ce-46c0-aac2-16dd175c3dce
+
+	column 'Shock Tier'
+		dataType: string
+		lineageTag: 85fd80d9-e9da-4b4a-ad86-b126a22eeb50
+		summarizeBy: none
+		sourceColumn: Shock Tier
+		sortByColumn: 'Tier Sort'
+
+	column 'Tier Sort'
+		dataType: int64
+		isHidden
+		lineageTag: 8ef6d6b4-4069-40e1-bb31-9fe420771c43
+		summarizeBy: none
+		sourceColumn: Tier Sort
+
+	column 'Running Range'
+		dataType: string
+		lineageTag: 6c2c0a2b-c7fa-48f4-93b7-f68ba0927523
+		summarizeBy: none
+		sourceColumn: Running Range
+
+	partition DimShockTier = m
+		mode: import
+		source =
+				let
+				    Source = Raw,
+				    Pick = Table.SelectColumns(Source, {"workout_shock_tier"}),
+				    Unique = Table.Distinct(Pick),
+				    Renamed = Table.RenameColumns(Unique, {{"workout_shock_tier", "Shock Tier"}}),
+				    Ranged = Table.AddColumn(Renamed, "Tier Sort", each if [Shock Tier] = "Moderate Burn" then 1 else if [Shock Tier] = "High Sweat Penalty" then 2 else if [Shock Tier] = "Severe Cardio Deficit" then 3 else 4, Int64.Type),
+				    Final = Table.AddColumn(Ranged, "Running Range", each if [Tier Sort] = 1 then "Under 45 min running" else if [Tier Sort] = 2 then "45-80 min running" else if [Tier Sort] = 3 then "80-120 min running" else "Over 120 min running", type text)
+				in
+				    Final
+

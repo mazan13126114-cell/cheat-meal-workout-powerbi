@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "name": "7c824ed41b694b31ac5d",
+  "position": {
+    "x": 664,
+    "y": 64,
+    "z": 24000,
+    "height": 72,
+    "width": 600,
+    "tabOrder": 24000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Burning off the average meal takes about 350 minutes of walking but only 100 of HIIT. Heavier people burn it faster at every fitness level.",
+                    "textStyle": {
+                      "fontSize": "11pt",
+                      "color": "#5F6B7A"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
