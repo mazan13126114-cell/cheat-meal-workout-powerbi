@@ -2,6 +2,10 @@
 
 How much exercise does a fast-food cheat meal cost, and who pays the biggest price?
 A 4-page Power BI report on 8,000 fast-food cheat-meal orders.
+![Overview](screenshots/page1_overview.png)
+![Meals and chains](screenshots/page2_meals.png)
+![The workout cost](screenshots/page3_workout.png)
+![Who pays most](screenshots/page4_who_pays.png)
 
 ## Key findings
 - An average cheat meal is about 1,600 kcal and takes about 2 hours of running (118 min) to burn off.
